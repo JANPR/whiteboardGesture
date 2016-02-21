@@ -6,11 +6,12 @@
     <string name="erase">Erase</string>
     <string name="equals">Equals</string>
     <string name="send">Send</string>
+    <string name="back">Back</string>
     <string name="copy">Copy</string>
     <string name="save">Save</string>
     <string name="paint">Paint</string>
     <string name="sml">Small</string>
     <string name="med">Medium</string>
     <string name="lrg">Large</string>
-    <string name="texthint">Drawn input appears here</string>
+    <string name="texthint">Drawn input appears here...</string>
 </resources>

@@ -37,7 +37,7 @@
             android:contentDescription="@string/equals"
             android:src="@drawable/equals_icon" />
     </LinearLayout>
-    <com.example.janpr.whiteboard.DrawingView
+    <com.example.janpr.white_board.DrawingView
         android:id="@+id/drawing"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
@@ -47,10 +47,6 @@
         android:layout_marginTop="3dp"
         android:layout_weight="1"
         android:background="#FFFFFFFF" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -62,36 +58,45 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:scrollHorizontally="false"
+            android:maxLines="10"
+            android:lines="5"
+            android:minLines="1"
+            android:maxLength="2000"
             android:textSize="18sp"
-            android:layout_margin="1dp"
+            android:layout_margin="2dp"
             android:hint="@string/texthint"
-            android:inputType="numberDecimal|text" />
+            android:inputType="textMultiLine" />
         <ImageButton
             android:id="@+id/send_btn"
-            android:background="#FFFFFFFF"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
+            android:layout_margin="1dp"
+            android:layout_gravity="bottom"
             android:scaleType="fitXY"
             android:contentDescription="@string/send"
-            android:src="@drawable/ic_send_black_24dp" />
+            android:src="@drawable/ic_send_black_24dp"
+            android:background="#00000000"/>
         <ImageButton
             android:id="@+id/copy_btn"
-            android:background="#FFFFFFFF"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
+            android:layout_margin="1dp"
+            android:layout_gravity="bottom"
             android:scaleType="fitXY"
             android:contentDescription="@string/copy"
-            android:src="@drawable/ic_content_copy_black_24dp" />
+            android:src="@drawable/ic_content_copy_black_24dp"
+            android:background="#00000000"/>
         <ImageButton
             android:id="@+id/save_btn"
-            android:background="#FFFFFFFF"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
+            android:layout_margin="1dp"
+            android:layout_gravity="bottom"
             android:scaleType="fitXY"
             android:contentDescription="@string/save"
-            android:src="@drawable/ic_save_black_24dp" />
+            android:src="@drawable/ic_save_black_24dp"
+            android:background="#00000000"/>
     </LinearLayout>
 </LinearLayout>
