@@ -61,6 +61,7 @@
             android:layout_gravity="center_vertical"
             android:scrollHorizontally="false"
             android:maxLines="10"
+            android:text="y=x^"
             android:lines="5"
             android:minLines="1"
             android:maxLength="2000"
