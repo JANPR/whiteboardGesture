@@ -37,16 +37,29 @@
             android:contentDescription="@string/equals"
             android:src="@drawable/equals_icon" />
     </LinearLayout>
-    <com.example.janpr.white_board.DrawingView
-        android:id="@+id/drawing"
+
+    <android.gesture.GestureOverlayView
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="3dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="3dp"
-        android:layout_weight="1"
-        android:background="#FFFFFFFF" />
+        android:layout_height="400dp"
+        android:id="@+id/gestureOverlayView"
+        android:layout_gravity="center_horizontal"
+        android:eventsInterceptionEnabled="false"
+        >
+
+        <com.example.janpr.white_board.DrawingView
+            android:id="@+id/drawing"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_weight="1"
+            android:background="#FFFFFFFF" />
+
+    </android.gesture.GestureOverlayView>
+
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
