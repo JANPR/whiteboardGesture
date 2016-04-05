@@ -169,7 +169,7 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
             if (view.getId() == R.id.equals_btn) {
                 //save drawing
                 System.out.println(gestureResult);
-
+                drawView.startNew();
 
                 if (gestureResult.equals("1") || gestureResult.equals("2") || gestureResult.equals("3") || gestureResult.equals("6")||
                 gestureResult.equals("7") || gestureResult.equals("8") || gestureResult.equals("9") || gestureResult.equals("-") ||
@@ -185,7 +185,7 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
                 else if (gestureResult.equals("4_11") || gestureResult.equals("14_1")) {
                     TextView t = (TextView) findViewById(R.id.text_field);
                     t.setText(t.getText()+"4");
-                }else if (gestureResult.equals("5-") || gestureResult.equals("-5")) {
+                }else if (gestureResult.equals("5-") || gestureResult.equals("-5") ||gestureResult.equals("5divide")||gestureResult.equals("divide5")){
                     TextView t = (TextView) findViewById(R.id.text_field);
                     t.setText(t.getText()+"5");
                 }else if (gestureResult.equals("mult1divide") || gestureResult.equals("dividedivide")
@@ -195,6 +195,15 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
                 }else if(gestureResult.equals("divide")){
                     TextView t = (TextView) findViewById(R.id.text_field);
                     t.setText(t.getText()+"/");
+                }else if(gestureResult.equals("exp")){
+                    TextView t = (TextView) findViewById(R.id.text_field);
+                    t.setText(t.getText()+"^");
+                }else if(gestureResult.equals("rp")){
+                    TextView t = (TextView) findViewById(R.id.text_field);
+                    t.setText(t.getText()+")");
+                }else if(gestureResult.equals("lp")){
+                    TextView t = (TextView) findViewById(R.id.text_field);
+                    t.setText(t.getText()+"(");
                 }
 
 
