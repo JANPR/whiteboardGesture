@@ -173,7 +173,7 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
 
                 if (gestureResult.equals("1") || gestureResult.equals("2") || gestureResult.equals("3") || gestureResult.equals("6")||
                 gestureResult.equals("7") || gestureResult.equals("8") || gestureResult.equals("9") || gestureResult.equals("-") ||
-                        gestureResult.equals("0"))
+                        gestureResult.equals("0")|| gestureResult.matches("[0-9]+"))
                 {
                     TextView t = (TextView) findViewById(R.id.text_field);
                     t.setText(t.getText()+ gestureResult);
@@ -204,6 +204,12 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
                 }else if(gestureResult.equals("lp")){
                     TextView t = (TextView) findViewById(R.id.text_field);
                     t.setText(t.getText()+"(");
+                }else if(gestureResult.equals("minusminus")){
+                    TextView t = (TextView) findViewById(R.id.text_field);
+                    t.setText(t.getText()+"=");
+                }else if(gestureResult.equals("period")) {
+                    TextView t = (TextView) findViewById(R.id.text_field);
+                    t.setText(t.getText()+"=");
                 }
 
 
