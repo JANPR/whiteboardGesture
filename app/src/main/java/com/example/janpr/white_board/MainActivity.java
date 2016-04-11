@@ -1,5 +1,7 @@
 package com.example.janpr.white_board;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
@@ -7,6 +9,7 @@ import android.gesture.GestureOverlayView;
 import android.gesture.Prediction;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.ClipData;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -76,6 +79,7 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
 
     @Override
     public void onClick(View view){
+        System.out.println(view.getId());
         if(view.getId()==R.id.draw_btn){
             if(!drawView.getErase()) {
                 final Dialog brushDialog = new Dialog(this);
@@ -146,6 +150,8 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
             drawView.setErase(true);
         }
         else if(view.getId()==R.id.new_btn){
+            System.out.println("code is running");
+
             AlertDialog.Builder newDialog = new AlertDialog.Builder(this);
             newDialog.setTitle("New equation");
             newDialog.setMessage("Start new equation?");
@@ -164,6 +170,12 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
             TextView t = (TextView) findViewById(R.id.text_field);
             t.setText("");
 
+        }
+        else if(view.getId() == R.id.copy_btn){
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+            TextView t = (TextView) findViewById(R.id.text_field);
+            ClipData clip = ClipData.newPlainText("Equation", t.getText());
+            clipboard.setPrimaryClip(clip);
         }
         else {
             if (view.getId() == R.id.equals_btn) {
@@ -191,7 +203,7 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
                 }else if (gestureResult.equals("mult1divide") || gestureResult.equals("dividedivide")
                         ||gestureResult.equals("dividemult1") ) {
                     TextView t = (TextView) findViewById(R.id.text_field);
-                    t.setText(t.getText()+"X");
+                    t.setText(t.getText()+"*");
                 }else if(gestureResult.equals("divide")){
                     TextView t = (TextView) findViewById(R.id.text_field);
                     t.setText(t.getText()+"/");
