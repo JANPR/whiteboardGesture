@@ -2,6 +2,7 @@ package com.example.janpr.white_board;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Intent;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
@@ -13,6 +14,10 @@ import android.content.ClipData;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -20,6 +25,10 @@ import android.content.DialogInterface;
 import android.view.View.OnClickListener;
 import android.gesture.GestureOverlayView.OnGesturePerformedListener;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.net.URLEncoder;
+import java.io.UnsupportedEncodingException;
 
 import java.util.ArrayList;
 
@@ -28,7 +37,9 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
 
     private DrawingView drawView;
     private float smallBrush, mediumBrush, largeBrush;
-    private ImageButton drawBtn, eraseBtn, newBtn, equalsBtn;
+    private ImageButton drawBtn, eraseBtn, newBtn, equalsBtn, copyBtn, saveBtn;
+    private EditText runningQ;
+
 
     GestureLibrary mLibrary;
     String gestureResult="";
@@ -51,6 +62,30 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
         equalsBtn = (ImageButton)findViewById(R.id.equals_btn);
         equalsBtn.setOnClickListener(this);
 
+
+
+
+        //The next 8 lines of code handle a receiving intent
+        Intent receivedIntent = getIntent();
+        String receivedAction = receivedIntent.getAction();
+//find out what we are dealing with
+        String receivedType = receivedIntent.getType();
+//make sure it's an action and type we can handle
+        if (receivedAction.equals(Intent.ACTION_SEND)) {
+            //content is being shared
+            if (receivedType.startsWith("text/")) {
+                //get the received text
+                String receivedText = receivedIntent.getStringExtra(Intent.EXTRA_TEXT);
+                //check that we have a string when receiving
+                if (receivedText != null) {
+                    //set the received text on the running queue
+                    runningQ.setText(receivedText);
+                }
+            }
+        }
+
+
+
         //on create gestures
 
         mLibrary = GestureLibraries.fromRawResource(this, R.raw.gestures);
@@ -59,7 +94,7 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
         }
 
         GestureOverlayView gestures = (GestureOverlayView) findViewById(R.id.gestureOverlayView);
-        gestures.setGestureStrokeAngleThreshold( 90.0f);//need to figure out side effets of this line
+        gestures.setGestureStrokeAngleThreshold( 80.0f);//need to figure out side effets of this line
 
         gestures.addOnGesturePerformedListener(this);
     }
@@ -77,8 +112,79 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
         }
     }
 
+    public void sendClick(View view){
+        TextView t = (TextView) findViewById(R.id.text_field);
+        System.out.println("this is the textfield" + t.getText().toString());
+        String website = stringEncoder(t.getText().toString());
+
+
+        setContentView(R.layout.result_screen);
+
+
+        WebView myWebView = (WebView) findViewById(R.id.webview);
+
+        WebSettings webSettings = myWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
+        myWebView.setWebViewClient(new Callback());
+
+
+        System.out.println(website);
+        myWebView.loadUrl(website);
+
+    }
+
+    public void backClick(View view){
+        setContentView(R.layout.activity_main);
+        onCreate(new Bundle());
+
+
+    }
+
+    public void saveClick(View view){
+            //save the calculation entered by user
+        System.out.println('0');
+
+        TextView t = (TextView) findViewById(R.id.text_field);
+
+        String calc = t.getText().toString();//runningQ.getText().toString().trim();
+            System.out.println('1');
+            Intent sendIntent = new Intent();
+            //indicates the the intent is to send data
+            sendIntent.setAction(Intent.ACTION_SEND);
+                System.out.println('2');
+
+        //attaches the string we are sending to the other app
+            sendIntent.putExtra(Intent.EXTRA_TEXT, calc);
+            //defines the MIME type text/plain it is sending
+        System.out.println('3');
+
+        sendIntent.setType("text/plain");
+
+            try {
+                //displays a chooser with a list of apps that matches the MIME type if this
+                //type of app is not installed a message is displayed.
+                startActivity(Intent.createChooser(sendIntent, "Save calculation using"));
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(this, "There are no apps installed to save your file.", Toast.LENGTH_SHORT).show();
+            }
+
+
+
+    }
+
+    public void copyClick(View view){
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        TextView t = (TextView) findViewById(R.id.text_field);
+        ClipData clip = ClipData.newPlainText("Equation", t.getText());
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(this, "Saved to Clipboard", Toast.LENGTH_SHORT).show();
+
+    }
     @Override
     public void onClick(View view){
+
+
         System.out.println(view.getId());
         if(view.getId()==R.id.draw_btn){
             if(!drawView.getErase()) {
@@ -171,14 +277,7 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
             t.setText("");
 
         }
-        else if(view.getId() == R.id.copy_btn){
-            ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-            TextView t = (TextView) findViewById(R.id.text_field);
-            ClipData clip = ClipData.newPlainText("Equation", t.getText());
-            clipboard.setPrimaryClip(clip);
-        }
-        else {
-            if (view.getId() == R.id.equals_btn) {
+        else if (view.getId() == R.id.equals_btn) {
                 //save drawing
                 System.out.println(gestureResult);
                 drawView.startNew();
@@ -201,7 +300,7 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
                     TextView t = (TextView) findViewById(R.id.text_field);
                     t.setText(t.getText()+"5");
                 }else if (gestureResult.equals("mult1divide") || gestureResult.equals("dividedivide")
-                        ||gestureResult.equals("dividemult1") ) {
+                        ||gestureResult.equals("dividemult1") || gestureResult.equals("-mult1") || gestureResult.equals("mult1-")) {
                     TextView t = (TextView) findViewById(R.id.text_field);
                     t.setText(t.getText()+"*");
                 }else if(gestureResult.equals("divide")){
@@ -216,7 +315,7 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
                 }else if(gestureResult.equals("lp")){
                     TextView t = (TextView) findViewById(R.id.text_field);
                     t.setText(t.getText()+"(");
-                }else if(gestureResult.equals("minusminus")){
+                }else if(gestureResult.equals("--")){
                     TextView t = (TextView) findViewById(R.id.text_field);
                     t.setText(t.getText()+"=");
                 }else if(gestureResult.equals("period")) {
@@ -227,7 +326,7 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
 
                 gestureResult ="";
             }
-        }
+
     }
 
     @Override
@@ -246,9 +345,34 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            System.out.println("settings");
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    public String stringEncoder(String expr) {
+        String url = "http://m.wolframalpha.com/input/?i=";
+
+        try {
+            url += URLEncoder.encode(expr, "UTF-8");
+        }
+
+        catch(UnsupportedEncodingException e) {
+                System.out.println("The expression could not be encoded in a URL.");
+        }
+
+        return url;
+    }
+
+    private class Callback extends WebViewClient {  //HERE IS THE MAIN CHANGE.
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            return (false);
+        }
+
+    }
+
 }

@@ -74,7 +74,7 @@
             android:layout_gravity="center_vertical"
             android:scrollHorizontally="false"
             android:maxLines="10"
-            android:text="y=x^"
+            android:text=""
             android:lines="5"
             android:minLines="1"
             android:maxLength="2000"
@@ -91,7 +91,9 @@
             android:scaleType="fitXY"
             android:contentDescription="@string/send"
             android:src="@drawable/ic_send_black_24dp"
-            android:background="#00000000"/>
+            android:background="#00000000"
+            android:clickable="true"
+            android:onClick="sendClick" />
         <ImageButton
             android:id="@+id/copy_btn"
             android:layout_width="wrap_content"
@@ -101,7 +103,8 @@
             android:scaleType="fitXY"
             android:contentDescription="@string/copy"
             android:src="@drawable/ic_content_copy_black_24dp"
-            android:background="#00000000"/>
+            android:background="#00000000"
+            android:onClick="copyClick" />
         <ImageButton
             android:id="@+id/save_btn"
             android:layout_width="wrap_content"
@@ -111,6 +114,8 @@
             android:scaleType="fitXY"
             android:contentDescription="@string/save"
             android:src="@drawable/ic_save_black_24dp"
-            android:background="#00000000"/>
+            android:background="#00000000"
+            android:onClick="saveClick" />
     </LinearLayout>
+
 </LinearLayout>
