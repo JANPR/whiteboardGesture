@@ -16,7 +16,8 @@
             android:scaleType="fitXY"
             android:contentDescription="@string/back"
             android:src="@drawable/ic_back_black_24dp"
-            android:background="#00000000"/>
+            android:background="#00000000"
+            android:onClick="backClick" />
         <EditText
             android:id="@+id/text_field"
             android:background="#FFFFFFFF"
@@ -54,6 +55,11 @@
             android:src="@drawable/ic_save_black_24dp"
             android:background="#00000000"/>
     </LinearLayout>
+    <WebView  xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/webview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
