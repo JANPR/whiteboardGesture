@@ -97,6 +97,11 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
         gestures.setGestureStrokeAngleThreshold( 80.0f);//need to figure out side effets of this line
 
         gestures.addOnGesturePerformedListener(this);
+
+
+
+        runningQ = (EditText)findViewById(R.id.text_field);
+        runningQ.setOnClickListener(this);
     }
 
     @Override
