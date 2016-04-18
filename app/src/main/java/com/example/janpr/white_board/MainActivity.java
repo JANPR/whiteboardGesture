@@ -275,6 +275,7 @@ public class MainActivity extends Activity implements OnClickListener, OnGesture
             newDialog.show();
             TextView t = (TextView) findViewById(R.id.text_field);
             t.setText("");
+            gestureResult ="";
 
         }
         else if (view.getId() == R.id.equals_btn) {
